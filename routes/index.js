@@ -68,10 +68,11 @@ router.post("/companies", async (req, res) => {
     // Get newly created ID of company
     const result = await db(sql.getCompanyByName(company_name));
     // Add Repo
-    await db(sql.addRepo(repo[0], result.data[0].id));
-    const data = await db(sql.getAllRepos());
-
-    res.status(201).send(data);
+    if (repo.length) {
+      await db(sql.addRepo(repo[0], result.data[0].id));
+      const data = await db(sql.getAllRepos());
+      res.status(201).send(data);
+    }
   }
 });
 
