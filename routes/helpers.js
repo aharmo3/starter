@@ -10,4 +10,11 @@ module.exports = {
   getCompanyByName: (name) =>
     `SELECT * from company WHERE company_name = '${name}'`,
   getCompanyById: (id) => `SELECT * FROM company WHERE id = ${id}`,
+  addUser: (username, hashedPassword, email) => {
+    return `INSERT INTO users (username, password, email) VALUES ('${username}', '${hashedPassword}', '${email}')`;
+  },
+  getAllUsers: () => `SELECT * FROM users ORDER BY username`,
+  getUserByUsername: (username) =>
+    `SELECT * FROM users WHERE username = '${username}'`,
+  getUserById: (id) => `SELECT * FROM users WHERE id=${id}`,
 };

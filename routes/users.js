@@ -2,15 +2,15 @@ var express = require("express");
 var router = express.Router();
 const { ensureUserLoggedIn, ensureSameUser } = require("../middleware/guards");
 const db = require("../model/helper");
+const sql = require("./helpers");
 
 /**
  * Get All Users
  */
 
 router.get("/", ensureUserLoggedIn, async function (req, res, next) {
-  let sql = `SELECT * FROM users ORDER BY username`;
   try {
-    let results = await db(sql);
+    let results = await db(sql.getAllUsers());
     let users = results.data;
     // don't return password
     users.forEach((u) => delete u.password);
@@ -26,10 +26,9 @@ router.get("/", ensureUserLoggedIn, async function (req, res, next) {
  */
 router.get("/:userId", ensureSameUser, async function (req, res, next) {
   let { userId } = req.params;
-  let sql = `SELECT * FROM users WHERE id=${userId}`;
 
   try {
-    let results = await db(sql);
+    let results = await db(sql.getUserById(userId));
     // We know user exists before he/she logged in!
     let user = results.data[0];
     // Don't return the password

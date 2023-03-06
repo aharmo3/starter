@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { ensureSameUser } = require("../middleware/guards");
 const { BCRYPT_WORK_FACTOR, SECRET_KEY } = require("../config");
 const db = require("../model/helper");
+const sql = require("./helpers");
 
 /**
  * Register a user
@@ -14,11 +15,7 @@ router.post("/register", async (req, res) => {
   let { username, password, email } = req.body;
   let hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
   try {
-    let sql = `
-      INSERT INTO users (username, password, email)
-      VALUES ('${username}', '${hashedPassword}', '${email}')
-    `;
-    await db(sql);
+    await db(sql.addUser(username, hashedPassword, email));
     res.send({ message: "Registration succeeded" });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -33,9 +30,7 @@ router.post("/login", async (req, res) => {
   let { username, password } = req.body;
 
   try {
-    let results = await db(
-      `SELECT * FROM users WHERE username = '${username}'`
-    );
+    let results = await db(sql.getUserByUsername(username));
     if (results.data.length === 0) {
       res.status(401).send({ error: "Login Failed" });
     } else {
