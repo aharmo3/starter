@@ -33,8 +33,8 @@ export default function useFetch(url) {
   };
   useEffect(() => {
     // call the function
-    fetchData(url);
+    fetchData();
   }, [url]);
   console.log("ERROR", error);
-  return [{ data, loading, error }, fetchData];
+  return { data, loading, error, fetchData };
 }

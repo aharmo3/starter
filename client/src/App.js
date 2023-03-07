@@ -6,9 +6,9 @@ import CompanyView from "./components/CompanyView";
 import LogInView from "./components/LogInView";
 
 import Header from "./components/Header";
-import { API, URL } from "./constants";
-import useFetch from "./useFetch";
+
 import "./App.scss";
+import RegistrationView from "./components/RegistrationView";
 function App() {
   return (
     <div className="App">
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/login" element={<LogInView />}></Route>
-        <Route path="/login" element={<LogInView />}></Route>
+        <Route path="/register" element={<RegistrationView />}></Route>
 
         <Route path="/companies" element={<CompaniesView />}>
           <Route path=":id" element={<CompanyView />} />

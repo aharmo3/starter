@@ -2,6 +2,7 @@ export const API = {
   GET_ALL: "/api/companies",
   POST_ALL: "/api/companies",
   LOGIN: "/api/login",
+  REGISTER: "/api/register",
   GET_COMPANY: (id) => {
     return `/api/companies/${id}`;
   },

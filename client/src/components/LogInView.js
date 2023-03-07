@@ -16,7 +16,7 @@ export default function LogInView() {
   const [input, setInput] = useState(LOGIN_FORM);
   const [token, setToken] = useLocalStorage(LS_KEYS.TOKEN);
   const [user, setUser] = useLocalStorage(LS_KEYS.USER);
-  const [{}, fetchData] = useFetch(API.LOGIN);
+  const { fetchData } = useFetch(API.LOGIN);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +42,11 @@ export default function LogInView() {
     <>
       <form onSubmit={handleSubmit}>
         <Container>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={2}
+            style={{ marginTop: 10, backgroundColor: "white" }}
+          >
             <Grid sm={12} item>
               <TextField
                 label="Username"

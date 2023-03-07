@@ -121,10 +121,10 @@ export default function AddCompanyForm() {
             />
           </Grid>
           <Grid sm={6} item>
-            <TechnologyDropdown
+            {/* <TechnologyDropdown
               onSelect={handleAutoComplete}
               value={input.technology}
-            />
+            /> */}
           </Grid>
           <Grid sm={12} item>
             {/*   <Typography variant="h6">
