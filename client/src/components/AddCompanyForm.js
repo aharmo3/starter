@@ -11,7 +11,7 @@ import { transformData } from "../helpers";
 import { API, LS_KEYS } from "../constants";
 import TechnologyDropdown from "./TechnologyDropdown";
 import useLocalStorage from "../useLocalStorage";
-
+import useFetch from "../useFetch";
 export default function AddCompanyForm() {
   const FORM_ENTRY = {
     repo_name: "",
@@ -22,6 +22,7 @@ export default function AddCompanyForm() {
   const [input, setInput] = useState(FORM_ENTRY);
   const [showSuccess, setShowSuccess] = useState(false);
   const [user] = useLocalStorage(LS_KEYS.USER);
+  const { fetchData } = useFetch(API.POST_ALL);
 
   const handleChange = (e) => {
     setInput((state) => ({
@@ -41,22 +42,13 @@ export default function AddCompanyForm() {
   };
   const addCompany = async (input) => {
     const finalInput = { ...input, creator_id: JSON.parse(user).id };
-    try {
-      let options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(transformData(finalInput)),
-      };
-
-      let response = await fetch(`${API.POST_ALL}`, options);
-      if (response.ok) {
-        setShowSuccess(true);
-      } else {
-        console.log(`Server error: ${response.status} ${response.statusText}`);
-      }
-    } catch (err) {
-      console.log(`Server Error`);
-    }
+    let options = {
+      method: "POST",
+      body: transformData(finalInput),
+    };
+    fetchData(options, () => {
+      setShowSuccess(true);
+    });
   };
   //addCompany
   const handleSubmit = (e) => {
