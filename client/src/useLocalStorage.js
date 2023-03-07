@@ -1,7 +1,10 @@
 export default function useLocalStorage(key) {
   const get = (key) => {
     const value = localStorage.getItem(key);
-    return value;
+    // Check if value is JSON object
+    if (value) {
+      return value[0] === "{" ? JSON.parse(value) : value;
+    }
   };
 
   const set = (value) => {

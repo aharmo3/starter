@@ -41,7 +41,7 @@ export default function AddCompanyForm() {
     setInput((state) => ({ ...state, technology: val }));
   };
   const addCompany = async (input) => {
-    const finalInput = { ...input, creator_id: JSON.parse(user).id };
+    const finalInput = { ...input, creator_id: user.id };
     let options = {
       method: "POST",
       body: transformData(finalInput),

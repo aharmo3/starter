@@ -20,7 +20,7 @@ export default function useFetch(url) {
       if (response.ok) {
         const results = await response.json();
         setData(results);
-        cb(results);
+        cb && cb(results);
       } else {
         setError(`Server error: ${response.status} ${response.statusText}`);
         console.log(`Server error: ${response.status} ${response.statusText}`);
@@ -35,6 +35,5 @@ export default function useFetch(url) {
     // call the function
     fetchData();
   }, [url]);
-  console.log("ERROR", error);
   return { data, loading, error, fetchData };
 }
