@@ -28,7 +28,6 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
   let { username, password } = req.body;
-
   try {
     let results = await db(sql.getUserByUsername(username));
     if (results.data.length === 0) {
