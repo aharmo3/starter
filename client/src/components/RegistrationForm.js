@@ -27,6 +27,7 @@ export default function RegistrationForm() {
     };
     fetchData(options, (data) => {
       navigate("/login");
+      window.location.reload();
     });
   };
   return (

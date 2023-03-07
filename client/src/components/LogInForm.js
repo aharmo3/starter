@@ -29,6 +29,7 @@ export default function LogInForm() {
       setToken(data.token);
       setUser(data.user);
       navigate("/");
+      window.location.reload();
     });
   };
 

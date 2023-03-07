@@ -21,8 +21,8 @@ export default function Form({ children, formInitialValues, submit }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Hello there");
-    return submit(form);
+    submit(form);
+    setForm(formInitialValues);
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Container from "@mui/material/Container";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
@@ -9,6 +7,9 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import { transformData } from "../helpers";
 import { API, LS_KEYS } from "../constants";
+import Form, { FormContext } from "./Form";
+import FormInput from "./FormInput";
+
 import TechnologyDropdown from "./TechnologyDropdown";
 import useLocalStorage from "../useLocalStorage";
 import useFetch from "../useFetch";
@@ -19,17 +20,9 @@ export default function AddCompanyForm() {
     technology: "",
     company_name: "",
   };
-  const [input, setInput] = useState(FORM_ENTRY);
   const [showSuccess, setShowSuccess] = useState(false);
   const [user] = useLocalStorage(LS_KEYS.USER);
   const { fetchData } = useFetch(API.POST_ALL);
-
-  const handleChange = (e) => {
-    setInput((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
-  };
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -37,92 +30,58 @@ export default function AddCompanyForm() {
     }
     setShowSuccess(false);
   };
-  const handleAutoComplete = (val) => {
-    setInput((state) => ({ ...state, technology: val }));
-  };
-  const addCompany = async (input) => {
-    const finalInput = { ...input, creator_id: user.id };
-    let options = {
-      method: "POST",
-      body: transformData(finalInput),
-    };
-    fetchData(options, () => {
-      setShowSuccess(true);
-    });
+  const addCompany = async (form) => {
+    if (user) {
+      const finalInput = { ...form, creator_id: user.id };
+      let options = {
+        method: "POST",
+        body: transformData(finalInput),
+      };
+      fetchData(options, () => {
+        setShowSuccess(true);
+      });
+    }
   };
   //addCompany
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addCompany(input);
-    setInput(FORM_ENTRY);
+  const handleSubmit = (form) => {
+    addCompany(form);
   };
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit}>
-        <Snackbar
-          open={showSuccess}
-          autoHideDuration={6000}
-          onClose={handleClose}
-        >
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Your Request was successfully submitted!
-          </Alert>
-        </Snackbar>
-        <Grid container spacing={2}>
-          <Grid sm={12} item>
-            <Typography variant="h5">Company:</Typography>
-          </Grid>
+    <Form
+      submit={(form) => {
+        handleSubmit(form);
+      }}
+      formInitialValues={FORM_ENTRY}
+    >
+      <Snackbar
+        open={showSuccess}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Your Request was successfully submitted!
+        </Alert>
+      </Snackbar>
+      <Grid sm={12} item>
+        <Typography variant="h5">Company:</Typography>
+      </Grid>
+      <FormInput label="Company Name" name="company_name" />
 
-          <Grid sm={12} item>
-            <TextField
-              label="Company Name"
-              variant="outlined"
-              fullWidth
-              required
-              margin="normal"
-              name="company_name"
-              value={input.company_name}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid sm={12} item>
-            <Typography variant="h5">Project or Codebase Info</Typography>
-          </Grid>
-          <Grid sm={6} item>
-            <TextField
-              label="Repo Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              name="repo_name"
-              value={input.repo_name}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid sm={6} item>
-            <TextField
-              label="Team Name"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              name="team_name"
-              value={input.team_name}
-              onChange={handleChange}
-            />
-          </Grid>
-          <Grid sm={6} item>
-            {/* <TechnologyDropdown
+      <Grid sm={12} item>
+        <Typography variant="h5">Project or Codebase Info</Typography>
+      </Grid>
+      <FormInput label="Repo Name" name="repo_name" />
+      <FormInput label="Team Name" name="team_name" />
+
+      <Grid sm={6} item>
+        {/* <TechnologyDropdown
               onSelect={handleAutoComplete}
               value={input.technology}
             /> */}
-          </Grid>
-          <Grid sm={12} item>
-            {/*   <Typography variant="h6">
+      </Grid>
+      <Grid sm={12} item>
+        {/*   <Typography variant="h6">
               The Criteria (Select All that Apply)
             </Typography>
 
@@ -148,14 +107,12 @@ export default function AddCompanyForm() {
                 label="These two functions call each other"
               />
             </FormGroup> */}
-          </Grid>
-          <Grid sm={12} item>
-            <Button size="large" variant="contained" type="submit">
-              Submit
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
-    </Container>
+      </Grid>
+      <Grid sm={12} item>
+        <Button size="large" variant="contained" type="submit">
+          Submit
+        </Button>
+      </Grid>
+    </Form>
   );
 }

@@ -18,7 +18,7 @@ export default function Header() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
+    window.location.reload();
   };
   const handleClickOpen = () => {
     setOpen(true);

@@ -6,9 +6,14 @@ import { Link } from "react-router-dom";
 import { URL } from "../constants";
 import CodeIcon from "@mui/icons-material/Code";
 import AddCompanyForm from "./AddCompanyForm";
+import { API, LS_KEYS } from "../constants";
+import useLocalStorage from "../useLocalStorage";
 import "./HomeView.scss";
+import LogInForm from "./LogInForm";
 
 export default function HomeView(props) {
+  const [token] = useLocalStorage(LS_KEYS.TOKEN);
+
   return (
     <main className="home">
       <section className="women">
@@ -46,7 +51,8 @@ export default function HomeView(props) {
               sm={6}
               style={{ background: "#fff", padding: 20, marginTop: 20 }}
             >
-              <AddCompanyForm addCompany={props.addCompany} />
+              {token && <AddCompanyForm />}
+              {!token && <LogInForm />}
             </Grid>
           </Grid>
         </Container>
