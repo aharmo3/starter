@@ -8,8 +8,9 @@ import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import { transformData } from "../helpers";
-import { API } from "../constants";
+import { API, LS_KEYS } from "../constants";
 import TechnologyDropdown from "./TechnologyDropdown";
+import useLocalStorage from "../useLocalStorage";
 
 export default function AddCompanyForm() {
   const FORM_ENTRY = {
@@ -20,6 +21,8 @@ export default function AddCompanyForm() {
   };
   const [input, setInput] = useState(FORM_ENTRY);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [user] = useLocalStorage(LS_KEYS.USER);
+
   const handleChange = (e) => {
     setInput((state) => ({
       ...state,
@@ -37,16 +40,16 @@ export default function AddCompanyForm() {
     setInput((state) => ({ ...state, technology: val }));
   };
   const addCompany = async (input) => {
+    const finalInput = { ...input, creator_id: JSON.parse(user).id };
     try {
       let options = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(transformData(input)),
+        body: JSON.stringify(transformData(finalInput)),
       };
 
       let response = await fetch(`${API.POST_ALL}`, options);
       if (response.ok) {
-        let listItem = await response.json();
         setShowSuccess(true);
       } else {
         console.log(`Server error: ${response.status} ${response.statusText}`);

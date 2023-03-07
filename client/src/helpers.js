@@ -9,9 +9,10 @@ export const formatDate = (inputDate) => {
 };
 
 export const transformData = (data) => {
-  const { company_name, repo_name, team_name, technology } = data;
+  const { company_name, repo_name, team_name, technology, creator_id } = data;
   const formatInput = {
     company_name,
+    creator_id,
     repo: [
       {
         repo_name,

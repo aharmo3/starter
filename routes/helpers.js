@@ -1,12 +1,12 @@
 module.exports = {
-  addRepo: (repo, guid) => {
-    return `INSERT INTO repos(repo_name, team_name,technology, company_id, repo_score) VALUES ('${repo.repo_name}','${repo.team_name}', '${repo.technology}','${guid}', null) `;
+  addRepo: (repo, guid, creator_id) => {
+    return `INSERT INTO repos(repo_name, team_name,technology, company_id, creator_id) VALUES ('${repo.repo_name}','${repo.team_name}', '${repo.technology}','${guid}','${creator_id}') `;
   },
   getAllRepos: () => `SELECT * from repos`,
   getAllCompanies: () => `SELECT * from companies`,
   getRepoById: (id) => `SELECT * from repos WHERE company_id = ${id}`,
-  addCompany: (name) =>
-    `INSERT INTO companies(company_name, company_score) VALUES ('${name}', null)`,
+  addCompany: (name, creator_id) =>
+    `INSERT INTO companies(company_name, creator_id) VALUES ('${name}','${creator_id}')`,
   getCompanyByName: (name) =>
     `SELECT * from companies WHERE company_name = '${name}'`,
   getCompanyById: (id) => `SELECT * FROM companies WHERE id = ${id}`,

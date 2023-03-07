@@ -52,24 +52,24 @@ router.get("/companies", async (req, res, next) => {
 });
 
 router.post("/companies", async (req, res) => {
-  const { company_name, repo } = req.body;
+  const { company_name, repo, creator_id } = req.body;
   const company = await db(sql.getCompanyByName(company_name));
   if (company.data.length) {
     const companyId = company.data[0].id;
     // If Company already exists, add repo information
-    await db(sql.addRepo(repo[0], companyId));
+    await db(sql.addRepo(repo[0], companyId, creator_id));
 
     // return new list of repos
     const data = await db(sql.getAllRepos());
     res.status(201).send(data);
   } else {
     // Company Does not exist - Add it
-    await db(sql.addCompany(company_name));
+    await db(sql.addCompany(company_name, creator_id));
     // Get newly created ID of company
     const result = await db(sql.getCompanyByName(company_name));
     // Add Repo
     if (repo.length) {
-      await db(sql.addRepo(repo[0], result.data[0].id));
+      await db(sql.addRepo(repo[0], result.data[0].id, creator_id));
       const data = await db(sql.getAllRepos());
       res.status(201).send(data);
     }
