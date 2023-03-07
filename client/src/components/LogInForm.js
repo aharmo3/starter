@@ -3,7 +3,6 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Form, { FormContext } from "./Form";
 
-import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import { API, LS_KEYS } from "../constants";
 import useLocalStorage from "../useLocalStorage";
@@ -41,25 +40,13 @@ export default function LogInForm() {
         }}
         formInitialValues={LOGIN_FORM}
       >
-        <Container>
-          <Grid
-            container
-            spacing={2}
-            style={{ marginTop: 10, backgroundColor: "white" }}
-          >
-            <Grid sm={12} item>
-              <FormInput label="Username" name="username" />
-            </Grid>
-            <Grid sm={12} item>
-              <FormInput label="Password" name="password" />
-            </Grid>
-            <Grid sm={12} item>
-              <Button size="large" variant="contained" type="submit">
-                Submit
-              </Button>
-            </Grid>
-          </Grid>
-        </Container>
+        <FormInput label="Username" name="username" />
+        <FormInput label="Password" name="password" />
+        <Grid sm={12} item>
+          <Button size="large" variant="contained" type="submit">
+            Submit
+          </Button>
+        </Grid>
       </Form>
     </>
   );

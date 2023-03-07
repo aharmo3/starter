@@ -1,4 +1,7 @@
 import React, { useState, createContext } from "react";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Unstable_Grid2";
+
 export const FormContext = createContext({
   form: {},
   handleSubmit: () => {},
@@ -30,7 +33,15 @@ export default function Form({ children, formInitialValues, submit }) {
           handleSubmit,
         }}
       >
-        {children}
+        <Container>
+          <Grid
+            container
+            spacing={2}
+            style={{ marginTop: 10, backgroundColor: "white" }}
+          >
+            {children}
+          </Grid>
+        </Container>
       </FormContext.Provider>
     </form>
   );

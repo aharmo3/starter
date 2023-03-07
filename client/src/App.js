@@ -7,7 +7,7 @@ import LogInForm from "./components/LogInForm";
 
 import Header from "./components/Header";
 import "./App.scss";
-import RegistrationView from "./components/RegistrationView";
+import RegistrationForm from "./components/RegistrationForm";
 function App() {
   return (
     <div className="App">
@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeView />} />
         <Route path="/login" element={<LogInForm />}></Route>
-        <Route path="/register" element={<RegistrationView />}></Route>
+        <Route path="/register" element={<RegistrationForm />}></Route>
 
         <Route path="/companies" element={<CompaniesView />}>
           <Route path=":id" element={<CompanyView />} />
