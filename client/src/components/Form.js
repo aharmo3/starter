@@ -14,7 +14,6 @@ export default function Form({ children, formInitialValues, submit }) {
       ...form,
       [name]: value,
     };
-    console.log("Form changed: ", updatedForm);
 
     // Update state
     setForm(updatedForm);
@@ -23,6 +22,7 @@ export default function Form({ children, formInitialValues, submit }) {
     e.preventDefault();
     submit(form);
     setForm(formInitialValues);
+    return form;
   };
   return (
     <form onSubmit={handleSubmit}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Form, { FormContext } from "./Form";
@@ -17,7 +17,11 @@ export default function LogInForm() {
   const [user, setUser] = useLocalStorage(LS_KEYS.USER);
   const { fetchData } = useFetch(API.LOGIN);
   const navigate = useNavigate();
-  const handleSubmit = async (form) => {
+  const formContext = useContext(FormContext);
+  const { form, handleSubmit } = formContext;
+  // body of request, token, callback
+  const submitStuff = async (form) => {
+    // handleSubmit();
     const options = {
       method: "POST",
       body: {
@@ -35,12 +39,7 @@ export default function LogInForm() {
 
   return (
     <>
-      <Form
-        submit={(form) => {
-          handleSubmit(form);
-        }}
-        formInitialValues={LOGIN_FORM}
-      >
+      <Form submit={submitStuff} formInitialValues={LOGIN_FORM}>
         <FormInput label="Username" name="username" />
         <FormInput label="Password" name="password" />
         <Grid sm={12} item>

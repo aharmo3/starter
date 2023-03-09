@@ -7,13 +7,14 @@ export default function FormInput(props) {
   const formContext = useContext(FormContext);
   const { form, handleFormChange } = formContext;
 
-  const { label, type = "text", name } = props;
+  const { label, type = "text", name, required } = props;
 
   return (
     <Grid sm={12} item>
       <TextField
         label={label}
         type={type}
+        required={required}
         variant="outlined"
         fullWidth
         margin="normal"
