@@ -53,8 +53,8 @@ export default function Header() {
           {token && (
             <>
               <Avatar sx={{ bgcolor: "#609EA2", marginRight: 2 }}>N</Avatar>
-              Welcome, <br />
-              {user.username}
+              {/* Welcome, <br />
+              {user.username} */}
               <Button color="inherit" onClick={handleLogout}>
                 Logout
               </Button>
@@ -62,9 +62,9 @@ export default function Header() {
           )}
           {!token && (
             <>
-              <Button color="inherit" onClick={handleClickOpen}>
+              {/* <Button color="inherit" onClick={handleClickOpen}>
                 Login
-              </Button>
+              </Button> */}
             </>
           )}
         </Toolbar>

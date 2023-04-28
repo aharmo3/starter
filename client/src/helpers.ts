@@ -1,4 +1,4 @@
-export const formatDate = (inputDate) => {
+export const formatDate = (inputDate: string) => {
   const formatD = new Date(inputDate);
   let date, month, year;
 
@@ -8,7 +8,7 @@ export const formatDate = (inputDate) => {
   return `${date}/${month}/${year}`;
 };
 
-export const transformData = (data) => {
+export const transformData = (data: {company_name: string, repo_name: string, team_name: string, technology:string, creator_id: number}) => {
   const { company_name, repo_name, team_name, technology, creator_id } = data;
   const formatInput = {
     company_name,
