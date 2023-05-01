@@ -11,7 +11,8 @@ import useLocalStorage from "../useLocalStorage";
 import "./HomeView.scss";
 import LogInForm from "./LogInForm";
 
-export default function HomeView(props) {
+
+export default function HomeView() {
   const [token] = useLocalStorage(LS_KEYS.TOKEN);
 
   return (

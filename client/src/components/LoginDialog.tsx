@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useContext } from "react";
+import React, {FC,  useState, forwardRef, useContext } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -7,12 +7,24 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import LogInView from "./LogInForm";
 import Form, { FormContext } from "./Form";
+import { TransitionProps } from "@mui/material/transitions";
 
-const Transition = forwardRef(function Transition(props, ref) {
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>,
+) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function LoginDialog({ onClose, isOpen }) {
+type LoginDialog = {
+  onClose: () => void,
+  isOpen: boolean
+}
+
+const LoginDialog: FC<LoginDialog> = ({onClose, isOpen}) => {
+
   const formContext = useContext(FormContext);
   const { form, handleSubmit, handleFormChange } = formContext;
 
@@ -40,3 +52,6 @@ export default function LoginDialog({ onClose, isOpen }) {
     </div>
   );
 }
+
+export default LoginDialog;
+

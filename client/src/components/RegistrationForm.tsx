@@ -8,6 +8,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { API, LS_KEYS } from "../constants";
 import useFetch from "../useFetch";
 
+
+type FormProp =  {[key: string]: any;}
+
 export default function RegistrationForm() {
   const REGISTER_FORM = {
     username: "",
@@ -16,7 +19,7 @@ export default function RegistrationForm() {
   };
   const navigate = useNavigate();
   const { fetchData } = useFetch(API.REGISTER);
-  const handleSubmit = async (form) => {
+  const handleSubmit = async (form: FormProp) => {
     const options = {
       method: "POST",
       body: {
@@ -41,7 +44,7 @@ export default function RegistrationForm() {
       <FormInput label="Username" name="username" />
       <FormInput label="Password" name="password" type="password" />
 
-      <Grid sm={12} item>
+      <Grid sm={12}>
         <Button size="large" variant="contained" type="submit">
           Submit
         </Button>

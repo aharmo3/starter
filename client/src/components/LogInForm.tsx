@@ -20,8 +20,7 @@ export default function LogInForm() {
   const formContext = useContext(FormContext);
   const { form, handleSubmit } = formContext;
   // body of request, token, callback
-  const submitStuff = async (form) => {
-    // handleSubmit();
+  const submitStuff = async (form:  {[key: string]: any}) => {
     const options = {
       method: "POST",
       body: {
@@ -42,7 +41,7 @@ export default function LogInForm() {
       <Form submit={submitStuff} formInitialValues={LOGIN_FORM}>
         <FormInput label="Username" name="username" />
         <FormInput label="Password" name="password" />
-        <Grid sm={12} item>
+        <Grid sm={12}>
           <Button size="large" variant="contained" type="submit">
             Submit
           </Button>
