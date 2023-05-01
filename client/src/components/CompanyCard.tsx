@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {FC} from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -7,7 +7,15 @@ import Typography from "@mui/material/Typography";
 import CardActionArea from "@mui/material/CardActionArea";
 import BusinessIcon from "@mui/icons-material/Business";
 
-export default function CompanyCard(props) {
+type CompanyInfoProps = {
+  companyInfo: {
+    company_name: string, 
+    repos: string[],
+    id: string | number
+  }
+}
+
+const CompanyCard: FC<CompanyInfoProps> = ({companyInfo}) => {
   return (
     <Box sx={{ width: 275 }}>
       <Card variant="outlined">
@@ -23,11 +31,11 @@ export default function CompanyCard(props) {
             <Typography variant="h6" className="truncate-single">
               <div style={{ display: "flex", alignItems: "center" }}>
                 <BusinessIcon style={{ marginRight: 10 }}></BusinessIcon>
-                {props.companyInfo.company_name}
+                {companyInfo.company_name}
               </div>
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              {props.companyInfo.repos.length} Repos
+              {companyInfo.repos.length} Repos
             </Typography>
           </CardContent>
           <CardActions>
@@ -38,3 +46,6 @@ export default function CompanyCard(props) {
     </Box>
   );
 }
+
+export default CompanyCard;
+

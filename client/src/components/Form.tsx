@@ -1,14 +1,25 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, FC, ReactEventHandler } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 
-export const FormContext = createContext({
+export type FormContextType = {
+  form: {[key: string]: any;}
+  handleSubmit: (e:React.FormEvent) => any,
+  handleFormChange?: (event: React.ChangeEvent<HTMLInputElement>) => any;
+}
+export const FormContext= createContext<FormContextType>({
   form: {},
   handleSubmit: () => {},
 });
-export default function Form({ children, formInitialValues, submit }) {
+
+type FormProps = {
+  children: JSX.Element | JSX.Element[],
+  formInitialValues: {[key: string]: any},
+  submit: (form:{[key: string]: any}) => void,
+}
+const Form: FC<FormProps> = ({ children, formInitialValues, submit }) => {
   const [form, setForm] = useState(formInitialValues);
-  const handleFormChange = (event) => {
+  const handleFormChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const updatedForm = {
       ...form,
@@ -18,7 +29,7 @@ export default function Form({ children, formInitialValues, submit }) {
     // Update state
     setForm(updatedForm);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:React.FormEvent) => {
     e.preventDefault();
     submit(form);
     setForm(formInitialValues);
@@ -46,3 +57,5 @@ export default function Form({ children, formInitialValues, submit }) {
     </form>
   );
 }
+
+export default Form;

@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 
-export default function useFetch(url) {
-  const [data, setData] = useState(null);
+type TResponse =  {body: string, headers?: {[key: string]: string}} | any
+
+
+export default function useFetch(url: string) {
+  const [data, setData] = useState<any>(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (options, cb) => {
+  const fetchData = async (options?: TResponse, cb?: (results: {[key: string]: string}) => void) => {
     try {
       setLoading(true);
-      const finalOptions = options
+      const finalOptions: TResponse = options
         ? {
             ...options,
             body: JSON.stringify(options.body),

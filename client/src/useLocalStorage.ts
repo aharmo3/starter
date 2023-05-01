@@ -1,5 +1,5 @@
-export default function useLocalStorage(key) {
-  const get = (key) => {
+export default function useLocalStorage(key: string) {
+  const get = (key: string) => {
     const value = localStorage.getItem(key);
     // Check if value is JSON object
     if (value) {
@@ -7,7 +7,7 @@ export default function useLocalStorage(key) {
     }
   };
 
-  const set = (value) => {
+  const set = (value: string | JSON) => {
     const stringValue =
       typeof value === "string" ? value : JSON.stringify(value);
     localStorage.setItem(key, stringValue);

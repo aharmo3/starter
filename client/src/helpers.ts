@@ -8,7 +8,7 @@ export const formatDate = (inputDate: string) => {
   return `${date}/${month}/${year}`;
 };
 
-export const transformData = (data: {company_name: string, repo_name: string, team_name: string, technology:string, creator_id: number}) => {
+export const transformData = (data: {company_name?: string, repo_name?: string, team_name?: string, technology?:string, creator_id?: number}) => {
   const { company_name, repo_name, team_name, technology, creator_id } = data;
   const formatInput = {
     company_name,

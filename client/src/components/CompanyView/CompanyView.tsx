@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, KeyboardEvent } from "react";
 import { useParams } from "react-router-dom";
 import ReposList from "../ReposList";
 import { API } from "../../constants";
@@ -10,11 +10,11 @@ export default function CompanyView() {
   const { id } = useParams();
   const [isOpen, setIsOpen] = useState(true);
 
-  const { data, error } = useFetch(API.GET_COMPANY(id));
+  const { data, error } = useFetch(API.GET_COMPANY(id as string));
   document.addEventListener("onDrawerOpen", (e) => {
     setIsOpen(!isOpen);
   });
-  const toggleDrawer = (open) => (e) => {
+  const toggleDrawer = (open: boolean) => (e: KeyboardEvent) => {
     if (e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
       return;
     }

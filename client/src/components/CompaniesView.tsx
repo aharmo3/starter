@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import { Link, Outlet } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
 import Typography from "@mui/material/Typography";
@@ -9,26 +9,30 @@ import CompanyCard from "./CompanyCard";
 import { URL, API } from "../constants";
 import useFetch from "../useFetch";
 
-export default function CompaniesView() {
+type CompanyProps = {
+    company_name: string, 
+    repos: string[],
+    id: string
+}
+const CompaniesView = () => {
   const { data, error } = useFetch(API.GET_ALL);
-  const handleClick = (e, id) => {
+  const handleClick = (e: React.SyntheticEvent<HTMLButtonElement>, id: string) => {
     const event = new CustomEvent("onDrawerOpen", { detail: id });
     document.dispatchEvent(event);
   };
   return (
     <>
       <Container>
-        <Typography variant="poster" component="h2">
+        <Typography component="h2">
           Company Registry
         </Typography>
         <Grid container spacing={2}>
           {data &&
-            data.map((company) => (
+            data.map((company:CompanyProps) => (
               <Grid
-                spacing={3}
-                item
+                
                 key={company.id}
-                onClick={(e) => {
+                onClick={(e: any) => {
                   handleClick(e, company.id);
                 }}
               >
@@ -48,3 +52,5 @@ export default function CompaniesView() {
     </>
   );
 }
+export default CompaniesView;
+

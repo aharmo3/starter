@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, SyntheticEvent, KeyboardEvent } from 'react';
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 
@@ -12,7 +12,7 @@ interface DrawerProps {
     modifed_date: string
   },
   isOpen: boolean,
-  onClose: () => void
+  onClose: (e: any) => void
 }
 
 const CompanyDrawer: FC<DrawerProps> = ({ children, company, isOpen, onClose }) => {
